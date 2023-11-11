@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/models/pokemon.dart';
 import 'package:flutter_pokedex/services/pokemon_service.dart';
@@ -106,10 +108,49 @@ class _PokemonDetailState extends State<PokemonDetail> {
                 ],
               ),
             ),
-            Column(
-              children:
-                  _pokemonInfo?.stats.map((e) => Text(e.name)).toList() ?? [],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                
+                Column(
+                  
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     const Text(
+                      "Stats",
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 200,
+                      width: width * 0.4,
+                      child: ListView.builder(
+                        itemCount: _pokemonInfo?.stats.length ?? 0,
+                        itemBuilder: (context, index) {
+                          final stat = _pokemonInfo?.stats[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(stat?.name ?? ""),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(stat?.value.toString() ?? ""),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                )]
             )
+            
           ],
         ),
       ),
